@@ -3,22 +3,48 @@
 namespace App\Livewire;
 
 use App\Models\Poll;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreatePoll extends Component
 {
+    #[Validate('required|min:5|max:255', 
+    message: [
+        'required' => 'Poll title is missing',
+        'min' => 'Poll title must be at least 5 characters long.',
+        'max' => 'Poll title is too long',
+    ])]
     public $title;
+
+    #[Validate([
+        'options' => 'required|array|min:2|max:10',
+        'options.*' => 'required|string|min:1|max:255',
+    ], message: [
+        'options.min' => 'poll must have at least two options',
+        'options.max' => 'poll options should not exceed 10 options',
+        'options.required' => 'The :attribute are missing.',
+        'options.*.required' => 'The :attribute is missing.',
+        'options.*.min' => 'The :attribute can not be empty.',
+        'options.*.max' => 'The :attribute should not exceed 255 letter'
+    ], attribute: [
+        'options.*' => 'option',
+    ])]
     public $options = [];
 
-    protected $rules = [
-        'title' => 'required|string|min:5|max:255',
-        'options' => 'required|array|min:1|max:10',
-        'options.*' => 'required|string|min:2|max:255'
-    ];
+    // protected $rules = [
+    //     'title' => 'required|string|min:5|max:255',
+    //     'options' => 'required|array|min:1|max:10',
+    //     'options.*' => 'required|string|min:2|max:255'
+    // ];
 
     // protected $messages = [
     //     'options.*' => 'Option field can not be empty',
     // ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function addOption() {
         $this->options[] = '';
@@ -52,6 +78,10 @@ class CreatePoll extends Component
 
         $this->reset();
     }
+
+    // public function updated($propertyName) {
+    //     $this->validateOnly($propertyName);
+    // }
 
     public function render()
     {

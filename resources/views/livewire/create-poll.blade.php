@@ -17,7 +17,7 @@
                 <div class="my-2">
                     <label>Option {{ $index + 1 }}</label>
                     <div class="flex gap-2">
-                        <input type="text" wire:model="options.{{ $index }}" />
+                        <input type="text" wire:model.live="options.{{ $index }}" />
                         <button class="btn" wire:click.prevent="removeOption({{ $index }})">Remove</button>
                     </div>
                     @error("options.{$index}")
@@ -26,6 +26,9 @@
 
                 </div>
             @endforeach
+            @error('options')
+                <p class="text-sm text-red-700">{{ $message }}</p>
+            @enderror
         </div>
 
         <button class="btn bg-gray-200 transition-all my-4">Save Poll</button>
