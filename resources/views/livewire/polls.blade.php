@@ -9,7 +9,7 @@
                 <div class="mt-3">
                     @foreach ($poll->options as $index => $option)
                         <div class="flex mb-3">
-                            <button class="btn">vote</button>
+                            <button class="btn" wire:click="vote({{ $option->id }})">vote</button>
                             <p class="ml-2 text-lg text-gray-600">
                                 {{ $option->text }} ({{ $option->votes->count() }})
                             </p>
