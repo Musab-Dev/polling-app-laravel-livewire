@@ -30,9 +30,19 @@
 </head>
 
 <body class="container mx-auto mt-10 mb-10 max-w-lg">
-    @livewire('create-poll')
-
     @livewireScripts
+
+    <section id="create-poll">
+        <h2 class="text-2xl font-bold mb-3">Create Poll</h2>
+        @livewire('create-poll')
+    </section>
+
+    <hr class="my-4" />
+
+    <section id="show-polls">
+        <h2 class="text-2xl font-bold mb-3">All Polls</h2>
+        @livewire('polls')
+    </section>
 </body>
 
 </html>
